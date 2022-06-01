@@ -5,6 +5,7 @@ namespace App\Controllers;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\Views\Twig;
 
 final class HomeController extends BaseController
 {
@@ -33,9 +34,10 @@ final class HomeController extends BaseController
         return empty($route) ? '/' : $route;
     }
 
-    private function homeAction(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    private function homeAction(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        $response->getBody()->write('home');
-        return $response;
+        $view = Twig::fromRequest($request);
+
+        return $view->render($response, 'home/home.html.twig');
     }
 }

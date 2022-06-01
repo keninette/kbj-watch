@@ -14,9 +14,4 @@ return function (App $app) {
     });
 
     $app->get('/', HomeController::class);
-
-    /*$app->group('/users', function (Group $group) {
-        $group->get('', ListUsersAction::class);
-        $group->get('/{id}', ViewUserAction::class);
-    });*/
 };

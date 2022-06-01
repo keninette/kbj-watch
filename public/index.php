@@ -10,6 +10,7 @@ use App\Controllers\HomeController;
 use DI\ContainerBuilder;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
+use Slim\Views\Twig;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -40,13 +41,17 @@ AppFactory::setContainer($container);
 $app = AppFactory::create();
 $callableResolver = $app->getCallableResolver();
 
+// Create Twig
+$twig = Twig::create('../templates', ['cache' => false]);
+
 // Register middleware
 $middleware = require __DIR__ . '/../app/middleware.php';
-$middleware($app);
+$middleware($app, $twig);
 
 // Register routes
 $routes = require __DIR__ . '/../app/routes.php';
 $routes($app);
+
 
 /** @var SettingsInterface $settings */
 $settings = $container->get(SettingsInterface::class);
